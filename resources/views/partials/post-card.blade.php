@@ -23,14 +23,18 @@
         <p class="text-base-content/50">{{ $post->created_at->diffForHumans() }}</p>
         <p class="text-base-content/50"><b>Comments: </b>{{ $post->comments_count }}</p>
         <p class="text-base-content/50"><b>Likes: </b>{{ $post->likes_count }}</p>
-        <p>
-            <a href="{{ route('category', ['category' => $post->category]) }}">
-                <div class="badge badge-secondary">{{ $post->category->name }}</div>
-            </a>
-        </p>
+        @if ($post->category)
+            <p>
+                <a href="{{ route('category', ['category' => $post->category]) }}">
+                    <div class="badge badge-secondary">{{ $post->category->name }}</div>
+                </a>
+            </p>
+        @endif
         <div class="flex flex-row flex-wrap gap-1">
             @foreach ($post->tags as $tag)
-                <div class="badge badge-primary">{{ $tag->name }}</div>
+                <a href="{{ route('tag', $tag) }}">
+                    <div class="badge badge-primary hover:badge-outline">{{ $tag->name }}</div>
+                </a>
             @endforeach
         </div>
         <div class="card-actions justify-end">

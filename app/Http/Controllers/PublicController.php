@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Like;
 use App\Models\Post;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -59,6 +60,16 @@ class PublicController extends Controller
                         ->latest()
                         ->simplePaginate(16);
         return view('user', compact('posts', 'user'));
+    }
+
+    public function tag(Tag $tag) {
+        $posts = $tag->posts()
+                        ->with('user')
+                        ->withCount('comments', 'likes')
+                        ->latest()
+                        ->simplePaginate(16);
+
+        return view('welcome', compact('posts', 'tag'));
     }
 
     public function follow(User $user) {
