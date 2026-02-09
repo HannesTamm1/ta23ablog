@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\CommentController;
 use App\Models\Tag;
+use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PublicController::class, 'index'])->name('home');
@@ -35,6 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/admin/posts/{post}/restore', [PostController::class, 'restore'])->name('posts.restore');
     Route::delete('/admin/posts/{post}/permadestroy', [PostController::class, 'permaDestroy'])->name('posts.permadestroy');
     Route::resource('/admin/posts', PostController::class);
+    Route::resource('/admin/tags', TagController::class)->except(['show']);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
