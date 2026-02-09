@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
+use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 
 class CommentController extends Controller
 {
@@ -27,9 +30,14 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCommentRequest $request)
+    public function store(StoreCommentRequest $request, Post $post): RedirectResponse
     {
-        //
+        $comment = new Comment($request->validated());
+        $comment->post()->associate($post);
+        $comment->user()->associate(Auth::user());
+        $comment->save();
+
+        return back();
     }
 
     /**

@@ -34,6 +34,10 @@
             @endforeach
         </div>
         <div class="card-actions justify-end">
+            <a href="{{ route('post', $post) }}#comments" class="btn btn-ghost gap-2">
+                <span>Leave a comment</span>
+                <div class="badge badge-outline">{{ $post->comments_count }}</div>
+            </a>
             @if ($post->authHasLiked)
                 <a href="{{ route('like', $post) }}" class="btn btn-error">Unlike</a>
             @else
